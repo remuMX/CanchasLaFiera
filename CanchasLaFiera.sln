@@ -17,11 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "02.BusinessLogicLaye
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.ServiceLayer", "01.ServiceLayer", "{DD76E1FB-EE1A-426D-86F6-6D06D99ACF13}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.ClientLayout", "01.ClientLayout", "{F4BF94AA-5568-48A9-9F2F-EA04E1196238}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.ClientLayer", "01.ClientLayer", "{F4BF94AA-5568-48A9-9F2F-EA04E1196238}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.REST", "01.ServiceLayer\API.REST\API.REST.csproj", "{2A830801-3DA8-4085-A237-3353F987134F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "01.ClientLayout\Client\Client.csproj", "{4E30D573-C9F5-4DBC-B9F5-E4D313AD46BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "01.ClientLayer\Client\Client.csproj", "{4E30D573-C9F5-4DBC-B9F5-E4D313AD46BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

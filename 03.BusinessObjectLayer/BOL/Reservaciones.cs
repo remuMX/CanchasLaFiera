@@ -52,6 +52,21 @@ namespace BOL
     {
         private DataAccess dataAccess = DataAccess.Instance();
 
+        private static volatile ReservacionDAL instance = null;
+        private static readonly object padlock = new object();
+
+        private ReservacionDAL() { }
+
+        public static ReservacionDAL Instance()
+        {
+            if (instance == null)
+                lock (padlock)
+                    if (instance == null)
+                        instance = new ReservacionDAL();
+            return instance;
+        }
+
+
         public int Add(Reservacion reservacion)
         {
             try
