@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace BOL
 
     public class Reservacion
     {
-        public int reservacion { get; set; }
+        public int id_reservacion { get; set; }
 
         public int id_cancha { get; set; }
 
@@ -31,9 +32,9 @@ namespace BOL
 
         public decimal total { get; set; }
 
-        public Reservacion(int reservacion, int id_cancha, DateTime entrada, DateTime salida, bool arbitro, string rfc, char estado_reservacion, decimal total)
+        public Reservacion(int id_reservacion, int id_cancha, DateTime entrada, DateTime salida, bool arbitro, string rfc, char estado_reservacion, decimal total)
         {
-            this.reservacion = reservacion;
+            this.id_reservacion = id_reservacion;
             this.id_cancha = id_cancha;
             this.entrada = entrada;
             this.salida = salida;
@@ -71,17 +72,17 @@ namespace BOL
         {
             try
             {
-                SqlParameter[] parameters = new SqlParameter[7];
+                SqlParameter[] parameters = new SqlParameter[6];
 
                 parameters[0] = new SqlParameter("@id_cancha", reservacion.id_cancha);
                 parameters[1] = new SqlParameter("@entrada", reservacion.entrada);
                 parameters[2] = new SqlParameter("@salida", reservacion.salida);
                 parameters[3] = new SqlParameter("@arbitro", reservacion.arbitro);
                 parameters[4] = new SqlParameter("@rfc", reservacion.rfc);
-                parameters[5] = new SqlParameter("@estado_reservacion", reservacion.estado_reservacion);
-                parameters[6] = new SqlParameter("@total", reservacion.total);
+                parameters[5] = new SqlParameter("@total", reservacion.total);
 
                 return dataAccess.Execute("stp_reservaciones_add", parameters);
+                
 
             }
             catch (Exception ex)
@@ -89,6 +90,39 @@ namespace BOL
 
                 throw new ApplicationException(ex.Message);
             }
+        }
+
+        public int ChangeStatus(Reservacion reservacion)
+        {
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[2];
+                parameters[0] = new SqlParameter("@id_reservacion", reservacion.id_reservacion);
+                parameters[1] = new SqlParameter("estado_reservacion", reservacion.estado_reservacion);
+
+                return dataAccess.Execute("stp_reservaciones_changestatus", parameters);
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+
+        public DataTable GetActivas()
+        {
+            return dataAccess.Query("stp_reservaciones_get_activas");
+        }
+
+
+        public DataTable GetAll()
+        {
+            return dataAccess.Query("stp_reservaciones_get_all");
+        }
+        public DataTable GetEspera()
+        {
+            return dataAccess.Query("stp_reservaciones_get_espera");
         }
     }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BOL
 {
-    public class Canchas: BindingList<Canchas>
+    public class Canchas: BindingList<Cancha>
     {
     }
 
@@ -56,16 +57,23 @@ namespace BOL
         }
 
 
-        public int Add(Cancha cancha)
+        public Canchas GetAll()
         {
             try
             {
-                SqlParameter[] parameters = new SqlParameter[2];
-                parameters[0] = new SqlParameter("@tipo_cancha", cancha.tipo_cancha);
-                parameters[1] = new SqlParameter("costo", cancha.costo);
-
-                return dataAccess.Execute("stp_canchas_add", parameters);
-
+                DataTable response = dataAccess.Query("stp_canchas_getall");
+                Canchas canchas = new Canchas();
+                foreach (DataRow item in response.Rows)
+                {
+                    Cancha cancha = new Cancha()
+                    {
+                        id_cancha = (int)item["id_cancha"],
+                        tipo_cancha = (string)item["tipo_cancha"],
+                        costo = (decimal)item["costo"]
+                    };
+                    canchas.Add(cancha);
+                }
+                return canchas;
             }catch(Exception ex)
             {
                 throw new ApplicationException(ex.Message);

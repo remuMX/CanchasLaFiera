@@ -12,7 +12,6 @@ namespace Client
 {
     public partial class Main : Form
     {
-        private int childFormNumber = 0;
 
         public Main()
         {
@@ -21,10 +20,15 @@ namespace Client
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            Form childForm = new Form();
-            childForm.MdiParent = this;
-            childForm.Text = "Ventana " + childFormNumber++;
-            childForm.Show();
+
+            foreach (Form form in Application.OpenForms)
+                if (form.GetType() == typeof(NuevaReservacion))
+                {
+                    form.Activate();
+                    return;
+
+                }
+            new NuevaReservacion() { MdiParent = this }.Show();
         }
 
         private void OpenFile(object sender, EventArgs e)
@@ -68,12 +72,12 @@ namespace Client
 
         private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
+            //toolStrip.Visible = toolBarToolStripMenuItem.Checked;
         }
 
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+            
         }
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,6 +106,18 @@ namespace Client
             {
                 childForm.Close();
             }
+        }
+
+        private void btnPendientes_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+                if (form.GetType() == typeof(Pendientes))
+                {
+                    form.Activate();
+                    return;
+
+                }
+            new Pendientes() { MdiParent = this }.Show();
         }
     }
 }
